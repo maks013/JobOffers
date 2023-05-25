@@ -39,15 +39,17 @@ public class OfferFacadeTest {
                 new JobOfferResponse("Title2", "Example5", "10000PLN", "https://example.com/offer5" )
         )).offerFacadeConfigForTests();
         //when
-        offerFacade.saveOffer(new OfferRequestDto("Java Developer", "Example1", "9000PLN", "https://example.com/offer1"));
-        offerFacade.saveOffer(new OfferRequestDto("Software Engineer", "Example2", "9500PLN", "https://example.com/offer2"));
-        offerFacade.saveOffer(new OfferRequestDto("Data Analyst", "Example3", "10000PLN", "https://example.com/offer3"));
+        offerFacade.saveOffer(new OfferRequestDto("Java Developer", "Example1", "9000PLN", "https://example.com/offer1" ));
+        offerFacade.saveOffer(new OfferRequestDto("Software Engineer", "Example2", "9500PLN", "https://example.com/offer2" ));
+        offerFacade.saveOffer(new OfferRequestDto("Data Analyst", "Example3", "10000PLN", "https://example.com/offer3" ));
 
         List<OfferDto> response = offerFacade.fetchAllOffersAndSaveAllIfNotExists();
 
         //then
-        assertEquals(response.get(0).offerUrl(),"https://example.com/offer4");
-        assertEquals(response.get(1).offerUrl(),"https://example.com/offer5");
+        assertAll(
+                () -> assertEquals(response.get(0).offerUrl(), "https://example.com/offer4" ),
+                () -> assertEquals(response.get(1).offerUrl(), "https://example.com/offer5" )
+        );
     }
 
     @Test
@@ -69,7 +71,7 @@ public class OfferFacadeTest {
         OfferFacade offerFacade = new OfferFacadeTestConfiguration(List.of()).offerFacadeConfigForTests();
         //when
         //then
-        assertThrows(OfferNotFoundException.class, () -> offerFacade.findOfferById("idExample"));
+        assertThrows(OfferNotFoundException.class, () -> offerFacade.findOfferById("idExample" ));
     }
 
     @Test
