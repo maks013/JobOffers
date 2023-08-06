@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-public class OfferFacadeTest {
+class OfferFacadeTest {
 
     @Test
     void should_save_4_offers_when_there_are_no_offers_in_database() {
