@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Optional;
 import java.util.UUID;
 
-public class InMemoryRepository implements LoginRepository {
+class InMemoryRepository implements LoginRepository {
 
     private static final UUID FIRST_ACCOUNT_ID = UUID.randomUUID();
     private static final HashMap<String,User> database = new HashMap<>();
