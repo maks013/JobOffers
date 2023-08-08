@@ -21,7 +21,7 @@ class OfferSchedulerTest extends BaseIntegrationTest {
 
     @Test
     void should_run_fetcher_in_correct_time() {
-        await().atMost(Duration.ofSeconds(5))
-                .untilAsserted(() -> verify(offerFetcher, times(5)).fetchOffers());
+        await().atMost(Duration.ofSeconds(3))
+                .untilAsserted(() -> verify(offerFetcher, times(3)).fetchOffers());
     }
 }

@@ -11,16 +11,17 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-@AllArgsConstructor
 @Log4j2
+@AllArgsConstructor
 public class OfferScheduler {
 
     private final OfferFacade facade;
 
     @Scheduled(fixedDelayString = "${offer.scheduler.delay}")
-    public void fetchOffersAndSave(){
+    public List<OfferDto> fetchOffersAndSave(){
         log.info("Scheduler started fetching offers");
-        List<OfferDto> offers = facade.fetchAllOffersAndSaveAllIfNotExists();
-        log.info(offers);
+        final List<OfferDto> addedOffers = facade.fetchAllOffersAndSaveAllIfNotExists();
+        log.info("Added new offers {}",addedOffers.size());
+        return addedOffers;
     }
 }

@@ -2,8 +2,6 @@ package com.junioroffers.domain.offer;
 
 import com.junioroffers.domain.offer.exception.OfferDuplicationException;
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,8 +16,7 @@ class OfferService {
         List<Offer> jobOffers = fetchOffers();
         final List<Offer> offers = filterNotExisting(jobOffers);
         try {
-//            return offerRepository.saveAll(offers);
-            return offers;
+            return offerRepository.saveAll(offers);
         } catch (OfferDuplicationException duplicationException) {
             throw new OfferDuplicationException();
         }
@@ -28,7 +25,7 @@ class OfferService {
     private List<Offer> filterNotExisting(List<Offer> jobOffers) {
         return jobOffers.stream()
                 .filter(offerDto -> !offerDto.offerUrl().isEmpty())
-                .filter(offerDto -> !offerRepository.existsOfferByUrl(offerDto.offerUrl()))
+                .filter(offerDto -> !offerRepository.existsOfferByOfferUrl(offerDto.offerUrl()))
                 .collect(Collectors.toList());
     }
 
@@ -39,5 +36,4 @@ class OfferService {
                 .map(OfferMapper::mapToOfferFromJobResponseDto)
                 .toList();
     }
-
 }
