@@ -11,8 +11,8 @@ class OfferMapper {
                 .id(offer.id())
                 .companyName(offer.companyName())
                 .position(offer.position())
-                .offerUrl(offer.offerUrl())
                 .salary(offer.salary())
+                .offerUrl(offer.offerUrl())
                 .build();
     }
 

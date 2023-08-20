@@ -5,15 +5,12 @@ import com.junioroffers.domain.loginandregister.dto.RegistrationResultDto;
 import com.junioroffers.domain.loginandregister.dto.UserDto;
 import com.junioroffers.domain.loginandregister.exception.InvalidUserRegistration;
 import com.junioroffers.domain.loginandregister.exception.UserNotFoundException;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.experimental.FieldDefaults;
 
 @AllArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class LoginAndRegisterFacade {
 
-    LoginRepository repository;
+    private final LoginRepository repository;
 
     public UserDto findByUsername(String username) {
         return repository.findByUsername(username)

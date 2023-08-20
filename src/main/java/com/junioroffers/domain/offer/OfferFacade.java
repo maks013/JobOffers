@@ -35,8 +35,11 @@ public class OfferFacade {
     public List<OfferDto> fetchAllOffersAndSaveAllIfNotExists() {
         return offerService.fetchAllOffersAndSaveAllIfNotExists()
                 .stream()
-                .map(OfferMapper :: mapToOfferDto)
+                .map(OfferMapper::mapToOfferDto)
                 .toList();
     }
 
+    public void deleteOffer(String id) {
+        offerRepository.deleteById(id);
+    }
 }

@@ -3,9 +3,9 @@ package com.junioroffers.domain.offer;
 import com.junioroffers.domain.offer.dto.JobOfferResponse;
 import com.junioroffers.domain.offer.dto.OfferDto;
 import com.junioroffers.domain.offer.dto.OfferRequestDto;
-import com.junioroffers.domain.offer.exception.OfferDuplicationException;
 import com.junioroffers.domain.offer.exception.OfferNotFoundException;
 import org.junit.jupiter.api.Test;
+import org.springframework.dao.DuplicateKeyException;
 
 import java.util.List;
 
@@ -62,7 +62,7 @@ class OfferFacadeTest {
         OfferRequestDto offerRequestDto = new OfferRequestDto(
                 "company", "abc2", "abcdefg2", "example.com" );
         //then
-        assertThrows(OfferDuplicationException.class, () -> offerFacade.saveOffer(offerRequestDto));
+        assertThrows(DuplicateKeyException.class, () -> offerFacade.saveOffer(offerRequestDto));
     }
 
     @Test
