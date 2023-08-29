@@ -2,40 +2,42 @@ package com.junioroffers.infrastructure.loginandregister.controller;
 
 import com.junioroffers.domain.loginandregister.LoginAndRegisterFacade;
 import com.junioroffers.domain.loginandregister.dto.RegisterDto;
-import com.junioroffers.domain.loginandregister.dto.UserDto;
+import com.junioroffers.domain.loginandregister.dto.RegistrationResultDto;
+import com.junioroffers.infrastructure.loginandregister.dto.LoginRequestDto;
+import com.junioroffers.infrastructure.loginandregister.dto.LoginResponseDto;
+import com.junioroffers.infrastructure.security.jwt.JwtAuthenticator;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.UUID;
+import javax.validation.Valid;
 
 @RestController
-//@AllArgsConstructor
+@AllArgsConstructor
 public class LoginAndRegisterController {
 
-//    private final LoginAndRegisterFacade facade;
+    private final JwtAuthenticator jwtAuthenticator;
+
+    private final LoginAndRegisterFacade loginAndRegisterFacade;
+    private final PasswordEncoder bCryptEncoder;
 
     @PostMapping("/login")
-    public ResponseEntity<UserDto> login(@RequestBody RegisterDto data) {
-//        try {
-//            final UserDto user = facade.findByUsername(data.username());
-//            return ResponseEntity.ok(user);
-//        } catch (UserNotFoundException exception) {
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-//        }
-        if (data.username().equals("user") && data.password().equals("password")) {
-            UserDto resultDto = UserDto.builder()
-                    .id(UUID.randomUUID())
-                    .username(data.username())
-                    .password(data.password())
-                                .build();
-            return ResponseEntity.ok(resultDto);
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
+
+    public ResponseEntity<LoginResponseDto> login(@Valid @RequestBody LoginRequestDto loginRequestDto) {
+        final LoginResponseDto loginResponseDto = jwtAuthenticator.authenticate(loginRequestDto);
+        return ResponseEntity.ok(loginResponseDto);
     }
 
+    @PostMapping("/register")
+    public ResponseEntity<RegistrationResultDto> register(@Valid @RequestBody RegisterDto registerDto) {
+        String encodedPassword = bCryptEncoder.encode(registerDto.password());
+        RegistrationResultDto registrationResultDto = loginAndRegisterFacade.register(
+                new RegisterDto(registerDto.username(), encodedPassword));
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(registrationResultDto);
+    }
 }

@@ -19,3 +19,9 @@ offer:
 
 scheduling:
    enabled: true
+
+auth:
+  jwt:
+    expirationDays: 30
+    secret: ${JOB_OFFERS_SECRET}
+    issuer: job-offers-service

@@ -4,8 +4,8 @@ import com.junioroffers.domain.loginandregister.dto.RegisterDto;
 import com.junioroffers.domain.loginandregister.dto.RegistrationResultDto;
 import com.junioroffers.domain.loginandregister.dto.UserDto;
 import com.junioroffers.domain.loginandregister.exception.InvalidUserRegistration;
-import com.junioroffers.domain.loginandregister.exception.UserNotFoundException;
 import org.junit.jupiter.api.Test;
+import org.springframework.security.authentication.BadCredentialsException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -21,7 +21,7 @@ class LoginAndRegisterFacadeTest {
         String user = "username";
         //when
         //then
-        assertThrows(UserNotFoundException.class, () -> loginFacade.findByUsername(user));
+        assertThrows(BadCredentialsException.class, () -> loginFacade.findByUsername(user));
     }
 
     @Test
