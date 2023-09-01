@@ -4,6 +4,8 @@ import com.junioroffers.domain.offer.dto.OfferDto;
 import com.junioroffers.domain.offer.dto.OfferRequestDto;
 import com.junioroffers.domain.offer.exception.OfferNotFoundException;
 import lombok.AllArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
+
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,6 +16,7 @@ public class OfferFacade {
     private final OfferRepository offerRepository;
     private final OfferService offerService;
 
+    @Cacheable("jobOffers")
     public List<OfferDto> findAllOffers() {
         return offerRepository.findAll()
                 .stream()

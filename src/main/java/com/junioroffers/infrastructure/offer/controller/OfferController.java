@@ -27,24 +27,14 @@ public class OfferController {
 
     @GetMapping("/offers/{id}")
     public ResponseEntity<OfferDto> findOfferById(@PathVariable String id) {
-        try {
-            OfferDto offerDto = offerFacade.findOfferById(id);
-            return ResponseEntity.ok(offerDto);
-        } catch (OfferNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
+        OfferDto offerDto = offerFacade.findOfferById(id);
+        return ResponseEntity.ok(offerDto);
     }
 
     @PostMapping("/offers")
     public ResponseEntity<OfferDto> createOffer(@RequestBody @Valid OfferRequestDto offerDto) {
-        try {
-            OfferDto offer = offerFacade.saveOffer(offerDto);
-            return ResponseEntity.status(HttpStatus.CREATED).body(offer);
-        } catch (NullPointerException nullPointerException) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        } catch (DuplicateKeyException duplicateKeyException) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).build();
-        }
+        OfferDto offer = offerFacade.saveOffer(offerDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(offer);
     }
 
     @DeleteMapping("/offers/{id}")
